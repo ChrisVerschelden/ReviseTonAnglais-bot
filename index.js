@@ -99,4 +99,4 @@ client.on("messageCreate", message => {
     }
 })
 
-client.login('process.env.TOKEN');
+client.login(process.env.TOKEN);
