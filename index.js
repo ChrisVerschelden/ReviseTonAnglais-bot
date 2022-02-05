@@ -54,7 +54,7 @@ function displayAndRemove(){
             console.log(err);
         } else {
             var words_array = JSON.parse(data);
-            var array_of_the_day = words_array.splice(0, 9);
+            var array_of_the_day = words_array.splice(0, 10);
             fs.readFile('channels.json', 'utf8', function readFileCallback(err, data){
                 if (err){
                     console.log(err);
