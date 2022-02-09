@@ -71,6 +71,20 @@ function displayAndRemove(){
     });
 }
 
+function displayAndRemoveOnce(channel){
+    fs.readFile('listeShuffledNotUsed.json', 'utf8', function readFileCallback(err, data){
+        if (err){
+            console.log(err);
+        } else {
+            var words_array = JSON.parse(data);
+            var array_of_the_day = words_array.splice(0, 10);
+            var daily_embed = buildEmbed(array_of_the_day);
+            channel.send({embeds: [daily_embed]})
+            fs.writeFileSync('listeShuffledNotUsed.json',JSON.stringify(words_array),{encoding:'utf8',flag:'w'});
+        }
+    });
+}
+
 var job = new CronJob('0 0 8 * * *', e => {
     displayAndRemove();
 }, null, true, 'Europe/Paris');
@@ -96,6 +110,10 @@ client.on("messageCreate", message => {
                 }
             }
         });
+    } else if(message.content === "!resendHere" && message.author.id === '297857268580614164'){
+        displayAndRemoveOnce(message.channel);
+    } else if(message.content === "!resendAll" && message.author.id === '297857268580614164'){
+        displayAndRemove();
     }
 })
 
